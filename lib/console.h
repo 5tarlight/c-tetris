@@ -4,6 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-void clear_console() {}
+void clear_console();
 
 #endif //TETRIS_CONSOLE_H
