@@ -1,0 +1,7 @@
+{
+  "files.associations": {
+    "*.mdx": "markdown",
+    "*.css": "css",
+    "console.h": "c"
+  }
+}
