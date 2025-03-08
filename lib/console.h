@@ -125,4 +125,13 @@ void set_console_color(const char* color);
  */
 void reset_console_color();
 
+/**
+ * 콘솔 제어를 위한 초기 설정을 한다.
+ * Windows의 cmd.exe에서 ANSI escape code를 사용하기 위해
+ * Virtual Terminal Processing을 활성화한다.
+ * 
+ * @see https://docs.microsoft.com/en-us/windows/console/console-virtual-terminal-sequences
+ */
+void init_console();
+
 #endif //TETRIS_CONSOLE_H

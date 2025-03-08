@@ -164,3 +164,10 @@ void set_console_color(const char* color) {
 void reset_console_color() {
   printf(RESET);
 }
+
+void init_console() {
+#ifdef _WIN32
+  HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+  SetConsoleMode(hConsole, ENABLE_PROCESSED_OUTPUT | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
+#endif
+}

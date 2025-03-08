@@ -2,6 +2,8 @@
 #include "lib/console.h"
 
 int main() {
+  init_console();
+
   Pair size = get_console_size();
   clear_console();
   printf("Console size: %d x %d\n\n", size.x, size.y);
