@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include "lib/console.h"
 
 int main() {
@@ -5,18 +6,17 @@ int main() {
   clear_console();
   printf("Console size: %d x %d\n\n", size.x, size.y);
 
-  int x = 3;
-  int y = 3;
-  while (1) {
-    int key = read_key();
-    if (key == 'q') break;
-
-    move_cursor(x, y);
-    printf("#");
-    x++; y++;
-
-    SLEEP(100);
+  set_console_color(FG_MAGENTA);
+  set_console_color(BG_YELLOW);
+  for (int i = 5; i < 10; i++) {
+    for (int j = 5; j < 10; j++) {
+      move_cursor(j, i);
+      printf("*");
+      SLEEP(10);
+    }
   }
-  
+  reset_console_color();
+  printf("\n");
+
   return 0;
 }

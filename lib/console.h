@@ -45,6 +45,30 @@
 /** Right Arrow */
 #define KEY_RIGHT 1003
 
+// ANSI color escape code
+#define RESET "\033[0m"
+#define BOLD "\033[1m"
+#define UNDERLINE "\033[4m"
+#define BLINK "\033[5m"
+#define INVERSE "\033[7m"
+#define HIDDEN "\033[8m"
+#define FG_BLACK "\033[30m"
+#define FG_RED "\033[31m"
+#define FG_GREEN "\033[32m"
+#define FG_YELLOW "\033[33m"
+#define FG_BLUE "\033[34m"
+#define FG_MAGENTA "\033[35m"
+#define FG_CYAN "\033[36m"
+#define FG_WHITE "\033[37m"
+#define BG_BLACK "\033[40m"
+#define BG_RED "\033[41m"
+#define BG_GREEN "\033[42m"
+#define BG_YELLOW "\033[43m"
+#define BG_BLUE "\033[44m"
+#define BG_MAGENTA "\033[45m"
+#define BG_CYAN "\033[46m"
+#define BG_WHITE "\033[47m"
+
 /**
  * 콘솔 화면을 지운다. 운영체제에 따라 다르게 동작한다.
  * Windows에서는 `cls` 명령어를 사용하고, UNIX 계열에서는 `clear` 명령어를 사용한다.
@@ -88,5 +112,17 @@ Pair get_console_size();
  * 콘솔 화면의 커서를 이동시킨다.
  */
 void move_cursor(int x, int y);
+
+/**
+ * 출력될 문자열의 색을 변경한다.
+ * reset하기 전까지 출력되는 모든 문자열에 영향을 준다.
+ * ANSI가 지원되지 않는 환경에서는 동작하지 않을 수 있다.
+ */
+void set_console_color(const char* color);
+
+/**
+ * 콘솔 화면의 색을 원래대로 복구한다.
+ */
+void reset_console_color();
 
 #endif //TETRIS_CONSOLE_H

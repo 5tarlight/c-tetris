@@ -156,3 +156,11 @@ void move_cursor(int x, int y) {
   fflush(stdout);
 #endif
 }
+
+void set_console_color(const char* color) {
+  printf("%s", color);
+}
+
+void reset_console_color() {
+  printf(RESET);
+}
