@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include "util.h"
 
 /**
  * 운영체제마다 사용할 수 있는 헤더가 다르기 때문에
@@ -20,6 +21,7 @@
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/ioctl.h>
 /**
  * 주어진 시간(ms) 동안 대기한다.
  * UNIX 계열 운영체제에서는 `usleep` 함수를 사용한다.
@@ -47,7 +49,7 @@
  * 콘솔 화면을 지운다. 운영체제에 따라 다르게 동작한다.
  * Windows에서는 `cls` 명령어를 사용하고, UNIX 계열에서는 `clear` 명령어를 사용한다.
  * 
- * WARNING : 화면이 심하게 깜빡일 수 있음. 가급적 사용하지 않는 것을 권장.
+ * WARNING : loop안에서 빠르게 사용하면 화면이 심하게 깜빡거릴 수 있음.
  * 
  * @see https://en.wikipedia.org/wiki/Clear_(Unix)
  */
@@ -76,5 +78,9 @@ int read_key();
  * @see read_key
  */
 void flush_input();
+
+Pair get_console_size();
+
+void move_cursor(int x, int y);
 
 #endif //TETRIS_CONSOLE_H

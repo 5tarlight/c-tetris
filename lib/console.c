@@ -120,3 +120,27 @@ void flush_input() {
   tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
 #endif
 }
+
+Pair get_console_size() {
+#ifdef _WIN32
+  CONSOLE_SCREEN_BUFFER_INFO csbi;
+  GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+  int width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
+  int height = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
+  return (Pair){width, height};
+#else
+  struct winsize w;
+  ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
+  return (Pair){w.ws_col, w.ws_row};
+#endif
+}
+
+void move_cursor(int x, int y) {
+#ifdef _WIN32
+  COORD pos = {x, y};
+  SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
+#else
+  printf("\033[%d;%dH", y + 1, x + 1);
+  fflush(stdout);
+#endif
+}

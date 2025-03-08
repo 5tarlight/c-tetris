@@ -1,21 +1,21 @@
 #include "lib/console.h"
 
 int main() {
-  while (1) {
-    clear_console();
-    int key = read_key();
+  Pair size = get_console_size();
+  clear_console();
+  printf("Console size: %d x %d\n\n", size.x, size.y);
 
-    if (key) {
-      printf("Key = %d\n", key);
-    } else {
-      printf("Waiting for input\n");
-    }
+  int x = 3;
+  int y = 3;
+  while (1) {
+    int key = read_key();
+    if (key == 'q') break;
+
+    move_cursor(x, y);
+    printf("#");
+    x++; y++;
 
     SLEEP(100);
-    
-    if (key == 'q') {
-      break;
-    }
   }
   
   return 0;
