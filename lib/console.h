@@ -79,8 +79,14 @@ int read_key();
  */
 void flush_input();
 
+/**
+ * 콘솔 화면의 크기를 구한다.
+ */
 Pair get_console_size();
 
+/**
+ * 콘솔 화면의 커서를 이동시킨다.
+ */
 void move_cursor(int x, int y);
 
 #endif //TETRIS_CONSOLE_H

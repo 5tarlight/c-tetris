@@ -123,24 +123,36 @@ void flush_input() {
 
 Pair get_console_size() {
 #ifdef _WIN32
+// Console Screen Buffer Info를 가져와서 현재 콘솔의 크기를 구한다.
   CONSOLE_SCREEN_BUFFER_INFO csbi;
   GetConsoleScreenBufferInfo(GetStdHandle(STD_OUTPUT_HANDLE), &csbi);
+
   int width = csbi.srWindow.Right - csbi.srWindow.Left + 1;
   int height = csbi.srWindow.Bottom - csbi.srWindow.Top + 1;
-  return (Pair){width, height};
+
+  // Pair 구조체에 너비와 높이를 저장해서 반환한다.
+  // Pair는 typedef로 정의되어 있기 때문에 아래 코드는
+  // `(struct ...) { ... }`와 같은 형태로 해석된다.
+  return (Pair){ width, height };
 #else
   struct winsize w;
+  // TIOCGWINSZ : 윈도우 크기를 가져오는 ioctl 명령어
+  // ioctl : 입출력 장치에 대해 제어 요청을 하는 시스템 콜
   ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
-  return (Pair){w.ws_col, w.ws_row};
+  return (Pair){ w.ws_col, w.ws_row };
 #endif
 }
 
 void move_cursor(int x, int y) {
 #ifdef _WIN32
-  COORD pos = {x, y};
+  COORD pos = { x, y };
+  // 콘솔 화면의 커서를 이동시킨다.
+  // GetStdHandle : 표준 출력 장치의 핸들을 가져온다.
   SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), pos);
 #else
+  // ANSI Escape Code를 사용해서 커서를 이동시킨다.
   printf("\033[%d;%dH", y + 1, x + 1);
+  // fflush : 버퍼에 남아있는 데이터를 출력한다.
   fflush(stdout);
 #endif
 }

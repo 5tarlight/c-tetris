@@ -5,4 +5,5 @@ set(CMAKE_C_STANDARD 11)
 
 add_executable(tetris main.c
         lib/console.h lib/console.c
+        lib/game.h lib/game.c
         lib/util.h)
