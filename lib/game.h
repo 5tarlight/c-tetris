@@ -9,7 +9,7 @@
 
 #define BOARD_WIDTH 10
 #define BOARD_HEIGHT 20
-#define PADDING 2
+#define PADDING 8
 
 #define BLOCK_FILLED "■"
 #define BLOCK_EMPTY "□"
@@ -26,4 +26,4 @@ void init_game();
 void draw_title();
 void draw_board();
 
-#endif
+#endif // TETRIS_GAME_H
