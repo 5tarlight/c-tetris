@@ -4,8 +4,14 @@
 
 void init_game() {
   srand(time(NULL));
+  hide_cursor();
   draw_title();
   draw_board();
+}
+
+void end_game() {
+  move_cursor(0, BOARD_HEIGHT + 1);
+  show_cursor();
 }
 
 void draw_title() {
@@ -35,4 +41,14 @@ void draw_board() {
   LOOP(BOARD_WIDTH)
     printf("%s", BORDER_HORIZONTAL);
   printf("%s\n", BORDER_BOTTOM_RIGHT);
+}
+
+Pair get_block_position(int x, int y) {
+  return (Pair){ PADDING + x, y };
+}
+
+void fill_block(int x, int y, const char* block, const char* color) {
+  Pair pos = get_block_position(x, y);
+  move_cursor(pos.x, pos.y);
+  printf("%s%s%s\n", color, block, RESET);
 }

@@ -171,3 +171,13 @@ void init_console() {
   SetConsoleMode(hConsole, ENABLE_PROCESSED_OUTPUT | ENABLE_VIRTUAL_TERMINAL_PROCESSING);
 #endif
 }
+
+void hide_cursor() {
+  printf("\e[?25l");
+  fflush(stdout);
+}
+
+void show_cursor() {
+  printf("\e[?25h");
+  fflush(stdout);
+}

@@ -23,7 +23,11 @@
 #define BORDER_BOTTOM_RIGHT "┘"
 
 void init_game();
+void end_game();
 void draw_title();
 void draw_board();
+
+Pair get_block_position(int x, int y);
+void fill_block(int x, int y, const char* block, const char* color);
 
 #endif // TETRIS_GAME_H

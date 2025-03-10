@@ -134,4 +134,7 @@ void reset_console_color();
  */
 void init_console();
 
+void hide_cursor();
+void show_cursor();
+
 #endif //TETRIS_CONSOLE_H
