@@ -142,6 +142,7 @@ int* generate_7bag() {
 int blockIdx = 0;
 int* blocks = NULL;
 int rotation = 0;
+int x = 0, y = 0;
 
 int get_next_block() {
   // 한바퀴 다 돌았거나 처음 시작할 때 새로 섞는다.
@@ -153,6 +154,7 @@ int get_next_block() {
   blockIdx = (blockIdx + 1) % 7;
   // 새로운 블록을 가져왔으므로 회전 상태를 초기화한다.
   rotation = 0;
+  x = y = 0;
   return nextBlock;
 }
 
@@ -165,12 +167,12 @@ void spawn_block() {
   int (*blockData)[4] = block[blockType][rotation];
 
   int minY = 4, minX = 4, maxX = 0;
-  for (int y = 0; y < 4; y++) {
-    for (int x = 0; x < 4; x++) {
-      if (blockData[y][x]) {
-        minY = min(minY, y); // 블록의 최소 y값. 시작점 찾기
-        minX = min(minX, x); // 블록의 최소 x값.
-        maxX = max(maxX, x); // 블록의 최대 x값.
+  for (int j = 0; j < 4; j++) {
+    for (int i = 0; i < 4; i++) {
+      if (blockData[j][i]) {
+        minY = min(minY, j); // 블록의 최소 y값. 시작점 찾기
+        minX = min(minX, i); // 블록의 최소 x값.
+        maxX = max(maxX, i); // 블록의 최대 x값.
       }
     }
   }
@@ -178,19 +180,16 @@ void spawn_block() {
   int width = maxX - minX + 1;
   int startX = (BOARD_WIDTH - width) / 2 + 1; // 중앙 정렬
 
-  for (int y = 0; y < 4; y++) {
-    for (int x = 0; x < 4; x++) {
-      if (blockData[y][x]) {
-        fill_block(startX + x - minX, y - minY, BLOCK_FALLING, blockColor[blockType]);
-      }
-    }
-  }
+  x = startX;
+  y = 0;
+  draw_block();
 }
 
 void control_block() {
-  int key = read_key();
-
   while (can_move_block(0, 1)) {
+    int key = read_key();
+    SLEEP(1000);
+
     switch (key) {
     case KEY_LEFT:
       move_block(-1, 0);
@@ -215,7 +214,8 @@ void control_block() {
     if (can_move_block(0, 1)) {
       move_block(0, 1);
       draw_block();
-      SLEEP(1000);
+    } else {
+      break;
     }
   }
 
@@ -223,13 +223,13 @@ void control_block() {
 }
 
 int can_move_block(int dx, int dy) {
-  int (*blockData)[4] = block[blocks[blockIdx]][rotation];
+  int (*blockData)[4][4] = block[blocks[blockIdx]][rotation];
 
-  for (int y = 0; y < 4; y++) {
-    for (int x = 0; x < 4; x++) {
-      if (blockData[y][x]) {
-        int nx = x + dx;
-        int ny = y + dy;
+  for (int j = 0; j < 4; j++) {
+    for (int i = 0; i < 4; i++) {
+      if (blockData[j][i]) {
+        int nx = x + i + dx;
+        int ny = y + j + dy;
 
         if (ny < 0 || ny >= BOARD_HEIGHT || nx < 0 || nx >= BOARD_WIDTH) {
           return 0;
@@ -255,11 +255,36 @@ void fix_block() {
 }
 
 void draw_block() {
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      if (block[blocks[blockIdx]][rotation][i][j]) {
+        fill_block(x + i, y + j, BLOCK_FILLED, blockColor[blocks[blockIdx]]);
+      }
+    }
+  }
 }
 
 void draw_next_block() {}
 
+void erase_block() {
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      if (block[blocks[blockIdx]][rotation][i][j]) {
+        fill_block(x + i, y + j, BLOCK_EMPTY, RESET);
+      }
+    }
+  }
+}
+
 void move_block(int dx, int dy) {
+  if (can_move_block(dx, dy) == 0) {
+    return;
+  }
+
+  erase_block();
+  x += dx;
+  y += dy;
+  draw_block();
 }
 
 void rotate_block_left() {

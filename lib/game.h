@@ -46,6 +46,7 @@ void fix_block();
 void clear_lines();
 void draw_block();
 void draw_next_block();
+void erase_block();
 
 void control_block();
 

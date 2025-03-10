@@ -172,7 +172,7 @@ void init_console() {
 #else
 struct termios tty;
 tcgetattr(STDIN_FILENO, &tty);
-tty.c_lflag &= ~(ECHO | ICANON);  // 입력 에코 및 버퍼링 비활성화
+tty.c_lflag &= ~(ECHO);  // 입력 에코 및 버퍼링 비활성화
 tcsetattr(STDIN_FILENO, TCSANOW, &tty);
 #endif
 }

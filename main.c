@@ -7,6 +7,13 @@ int main() {
   clear_console();
   init_game();
 
+  // while (1) {
+  //   int key = read_key();
+  //   if (key)
+  //     printf("%d\n", key);
+  //   SLEEP(100);
+  // }
+
   while (1) {
     spawn_block();
     draw_next_block();
