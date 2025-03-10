@@ -187,28 +187,29 @@ void spawn_block() {
 
 void control_block() {
   while (can_move_block(0, 1)) {
-    int key = read_key();
-    SLEEP(1000);
-
-    switch (key) {
-    case KEY_LEFT:
-      move_block(-1, 0);
-      break;
-    case KEY_RIGHT:
-      move_block(1, 0);
-      break;
-    case KEY_DOWN:
-      move_block(0, 1);
-      break;
-    case 'z':
-      rotate_block_left();
-      break;
-    case 'x':
-      rotate_block_right();
-      break;
-    case ' ':
-      drop_block();
-      break;
+    for (int i = 0; i < 100; i++) {
+      int key = read_key();
+      switch (key) {
+        case KEY_LEFT:
+          move_block(-1, 0);
+          break;
+        case KEY_RIGHT:
+          move_block(1, 0);
+          break;
+        case KEY_DOWN:
+          move_block(0, 1);
+          break;
+        case 'z':
+          rotate_block_left();
+          break;
+        case 'x':
+          rotate_block_right();
+          break;
+        case ' ':
+          drop_block();
+          break;
+      }
+      SLEEP(10);
     }
 
     move_block(0, 1);
@@ -225,7 +226,7 @@ int can_move_block(int dx, int dy) {
         int nx = x + i + dx;
         int ny = y + j + dy;
 
-        if (ny < 0 || ny >= BOARD_HEIGHT || nx < 0 || nx >= BOARD_WIDTH) {
+        if (ny < 0 || ny >= BOARD_HEIGHT || nx <= 0 || nx > BOARD_WIDTH) {
           return 0;
         }
 
