@@ -31,5 +31,19 @@ void draw_board();
 
 Pair get_block_position(int x, int y);
 void fill_block(int x, int y, const char* block, const char* color);
+int* generate_7bag();
+int get_next_block();
+
+void spawn_block();
+void move_block(int dx, int dy);
+void rotate_block_left();
+void rotate_block_right();
+void drop_block();
+int can_move_block(int dx, int dy);
+int can_rotate_block(int dr);
+void fix_block();
+void clear_lines();
+void draw_block();
+void draw_next_block();
 
 #endif // TETRIS_GAME_H

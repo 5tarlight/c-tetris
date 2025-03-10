@@ -6,4 +6,7 @@ typedef struct {
   int y;
 } Pair;
 
+int min(int, int);
+int max(int, int);
+
 #endif // TETRIS_UTIL_H
