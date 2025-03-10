@@ -16,7 +16,7 @@ void clear_console() {
  * 키를 읽고 -> 버퍼를 지운다
  * 형태로 로직을 분리하기 위해 만든 함수.
  */
-int _read_key() {
+int read_raw_key() {
 #ifdef _WIN32
   // 버퍼에 남은 데이터가 있는지 확인. 없다면 0을 반환.
   if (_kbhit()) {
@@ -96,7 +96,7 @@ int _read_key() {
 
 int read_key() {
   // 키를 읽고 버퍼를 비운다.
-  int ch = _read_key();
+  int ch = read_raw_key();
   flush_input();
   return ch;
 }

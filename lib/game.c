@@ -210,24 +210,18 @@ void control_block() {
       drop_block();
       break;
     }
-  
-    if (can_move_block(0, 1)) {
-      move_block(0, 1);
-      draw_block();
-    } else {
-      break;
-    }
+
+    move_block(0, 1);
   }
 
   fix_block();
+  SLEEP(1000);
 }
 
 int can_move_block(int dx, int dy) {
-  int (*blockData)[4][4] = block[blocks[blockIdx]][rotation];
-
   for (int j = 0; j < 4; j++) {
     for (int i = 0; i < 4; i++) {
-      if (blockData[j][i]) {
+      if (block[blocks[blockIdx]][rotation][j][i] == 1) {
         int nx = x + i + dx;
         int ny = y + j + dy;
 
@@ -246,9 +240,11 @@ int can_move_block(int dx, int dy) {
 }
 
 int can_rotate_left() {
+  return 1;
 }
 
 int can_rotate_right() {
+  return 1;
 }
 
 void fix_block() {

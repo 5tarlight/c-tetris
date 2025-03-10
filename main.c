@@ -17,7 +17,7 @@ int main() {
   while (1) {
     spawn_block();
     draw_next_block();
-    control_block(); // This causes lock! 
+    control_block(); // This causes lock!
     clear_lines();
   }
 
