@@ -67,6 +67,7 @@ void fill_block(int x, int y, const char* block, const char* color) {
   printf("%s%s%s\n", color, block, RESET);
 }
 
+// https://strategywiki.org/wiki/Tetris/Rotation_systems
 int block[7][4][4][4] = {
   { // T
       {{ 0,0,0,0 }, { 0,1,0,0 }, { 1,1,1,0 }, { 0,0,0,0 }},
@@ -167,9 +168,9 @@ void spawn_block() {
   for (int y = 0; y < 4; y++) {
     for (int x = 0; x < 4; x++) {
       if (blockData[y][x]) {
-        minY = min(minY, y);
-        minX = min(minX, x);
-        maxX = max(maxX, x);
+        minY = min(minY, y); // 블록의 최소 y값. 시작점 찾기
+        minX = min(minX, x); // 블록의 최소 x값.
+        maxX = max(maxX, x); // 블록의 최대 x값.
       }
     }
   }
