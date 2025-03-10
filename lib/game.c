@@ -253,7 +253,7 @@ void fix_block() {
 void draw_block() {
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
-      if (block[blocks[blockIdx]][rotation][i][j]) {
+      if (block[blocks[blockIdx]][rotation][j][i]) {
         fill_block(x + i, y + j, BLOCK_FILLED, blockColor[blocks[blockIdx]]);
       }
     }
@@ -265,7 +265,7 @@ void draw_next_block() {}
 void erase_block() {
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
-      if (block[blocks[blockIdx]][rotation][i][j]) {
+      if (block[blocks[blockIdx]][rotation][j][i]) {
         fill_block(x + i, y + j, BLOCK_EMPTY, RESET);
       }
     }
