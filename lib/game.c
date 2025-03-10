@@ -28,6 +28,7 @@ void draw_title() {
 #define LOOP(n) for (int i = 0; i < (n); i++)
 
 void draw_board() {
+  // 테두리 
   LOOP(BOARD_HEIGHT) {
     move_cursor(PADDING, i);
     printf("%s", BORDER_VERTICAL);
@@ -41,6 +42,19 @@ void draw_board() {
   LOOP(BOARD_WIDTH)
     printf("%s", BORDER_HORIZONTAL);
   printf("%s\n", BORDER_BOTTOM_RIGHT);
+
+  // 다음 블록 표시
+  move_cursor(0, 5);
+  // C에서는 문자열을 이어붙일 때 자동으로 합쳐준다.
+  printf("%s NEXT %s", BG_CYAN FG_BLACK, RESET);
+
+  // 조작법
+  move_cursor(22, 0);
+  printf("Move   : ←, →, ↓");
+  move_cursor(22, 1);
+  printf("Rotate : Z, X");
+  move_cursor(22, 2);
+  printf("Drop   : Space");
 }
 
 Pair get_block_position(int x, int y) {

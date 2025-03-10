@@ -10,7 +10,7 @@ int main() {
   while (1) {
     spawn_block();
 
-    SLEEP(200);
+    SLEEP(500);
   }
 
   end_game();
