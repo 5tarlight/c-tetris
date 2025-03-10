@@ -40,10 +40,13 @@ void rotate_block_left();
 void rotate_block_right();
 void drop_block();
 int can_move_block(int dx, int dy);
-int can_rotate_block(int dr);
+int can_rotate_left();
+int can_rotate_right();
 void fix_block();
 void clear_lines();
 void draw_block();
 void draw_next_block();
+
+void control_block();
 
 #endif // TETRIS_GAME_H

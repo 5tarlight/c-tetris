@@ -186,3 +186,90 @@ void spawn_block() {
     }
   }
 }
+
+void control_block() {
+  int key = read_key();
+
+  while (can_move_block(0, 1)) {
+    switch (key) {
+    case KEY_LEFT:
+      move_block(-1, 0);
+      break;
+    case KEY_RIGHT:
+      move_block(1, 0);
+      break;
+    case KEY_DOWN:
+      move_block(0, 1);
+      break;
+    case 'z':
+      rotate_block_left();
+      break;
+    case 'x':
+      rotate_block_right();
+      break;
+    case ' ':
+      drop_block();
+      break;
+    }
+  
+    if (can_move_block(0, 1)) {
+      move_block(0, 1);
+      draw_block();
+      SLEEP(1000);
+    }
+  }
+
+  fix_block();
+}
+
+int can_move_block(int dx, int dy) {
+  int (*blockData)[4] = block[blocks[blockIdx]][rotation];
+
+  for (int y = 0; y < 4; y++) {
+    for (int x = 0; x < 4; x++) {
+      if (blockData[y][x]) {
+        int nx = x + dx;
+        int ny = y + dy;
+
+        if (ny < 0 || ny >= BOARD_HEIGHT || nx < 0 || nx >= BOARD_WIDTH) {
+          return 0;
+        }
+
+        if (ny >= 0 && board[ny][nx]) {
+          return 0;
+        }
+      }
+    }
+  }
+
+  return 1;
+}
+
+int can_rotate_left() {
+}
+
+int can_rotate_right() {
+}
+
+void fix_block() {
+}
+
+void draw_block() {
+}
+
+void draw_next_block() {}
+
+void move_block(int dx, int dy) {
+}
+
+void rotate_block_left() {
+}
+
+void rotate_block_right() {
+}
+
+void drop_block() {
+}
+
+void clear_lines() {
+}

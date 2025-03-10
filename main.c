@@ -9,8 +9,9 @@ int main() {
 
   while (1) {
     spawn_block();
-
-    SLEEP(500);
+    draw_next_block();
+    control_block(); // This causes lock! 
+    clear_lines();
   }
 
   end_game();
