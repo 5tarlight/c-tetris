@@ -187,7 +187,8 @@ void spawn_block() {
 
 void control_block() {
   while (can_move_block(0, 1)) {
-    for (int i = 0; i < 100; i++) {
+    int spaced = 0;
+    for (int i = 0; i < 100 && !spaced; i++) {
       int key = read_key();
       switch (key) {
         case KEY_LEFT:
@@ -207,12 +208,19 @@ void control_block() {
           break;
         case ' ':
           drop_block();
+          spaced = 1;
           break;
       }
-      SLEEP(10);
+
+      if (!spaced)
+        SLEEP(10);
     }
 
-    move_block(0, 1);
+    if (!spaced)
+      move_block(0, 1);
+    else {
+      break;
+    }
   }
 
   fix_block();
@@ -252,7 +260,7 @@ void fix_block() {
   for (int j = 0; j < 4; j++) {
     for (int i = 0; i < 4; i++) {
       if (block[blocks[blockIdx]][rotation][j][i]) {
-        board[y + j][x + i] = 1;
+        board[y + j][x + i] = blocks[blockIdx];
       }
     }
   }
@@ -292,13 +300,70 @@ void move_block(int dx, int dy) {
 }
 
 void rotate_block_left() {
+  int newRotation = (rotation + 3) % 4;
+  if (can_rotate_left() == 0) {
+    return;
+  }
+
+  erase_block();
+  rotation = newRotation;
+  draw_block();
 }
 
 void rotate_block_right() {
+  int newRotation = (rotation + 1) % 4;
+  if (can_rotate_right() == 0) {
+    return;
+  }
+
+  erase_block();
+  rotation = newRotation;
+  draw_block();
 }
 
 void drop_block() {
+  while (can_move_block(0, 1)) {
+    move_block(0, 1);
+  }
+  draw_block();
 }
 
 void clear_lines() {
+  int changed = 0;
+  for (int i = BOARD_HEIGHT - 1; i >= 0; i--) {
+    int filled = 1;
+    for (int j = 0; j < BOARD_WIDTH; j++) {
+      if (board[i][j] == 0) {
+        filled = 0;
+        break;
+      }
+    }
+
+    if (filled) {
+      for (int k = i; k > 0; k--) {
+        for (int j = 0; j < BOARD_WIDTH; j++) {
+          board[k][j] = board[k - 1][j];
+        }
+      }
+
+      for (int j = 0; j < BOARD_WIDTH; j++) {
+        board[0][j] = 0;
+      }
+
+      changed = 1;
+      i++;
+    }
+  }
+
+  if (changed) {
+    for (int i = 0; i < BOARD_HEIGHT; i++) {
+      for (int j = 0; j < BOARD_WIDTH; j++) {
+        if (board[i][j]) {
+          fill_block(j + 1, i, BLOCK_FILLED, blockColor[board[i][j]]);
+        } else {
+          fill_block(j + 1, i, BLOCK_EMPTY, RESET);
+        }
+      }
+    }
+  }
 }
