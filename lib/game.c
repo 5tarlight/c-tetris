@@ -216,7 +216,7 @@ void control_block() {
   }
 
   fix_block();
-  SLEEP(1000);
+  SLEEP(500);
 }
 
 int can_move_block(int dx, int dy) {
@@ -249,6 +249,13 @@ int can_rotate_right() {
 }
 
 void fix_block() {
+  for (int j = 0; j < 4; j++) {
+    for (int i = 0; i < 4; i++) {
+      if (block[blocks[blockIdx]][rotation][j][i]) {
+        board[y + j][x + i] = 1;
+      }
+    }
+  }
 }
 
 void draw_block() {
