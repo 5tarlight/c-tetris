@@ -8,7 +8,7 @@
 #include "util.h"
 
 #define BOARD_WIDTH 10
-#define BOARD_HEIGHT 20
+#define BOARD_HEIGHT 15
 #define PADDING 8
 
 #define BLOCK_FILLED "■"
@@ -21,6 +21,8 @@
 #define BORDER_TOP_RIGHT "┐"
 #define BORDER_BOTTOM_LEFT "└"
 #define BORDER_BOTTOM_RIGHT "┘"
+
+#define BLOCK_COUNT 7
 
 void init_game();
 void end_game();
