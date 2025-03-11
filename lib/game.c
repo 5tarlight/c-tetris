@@ -176,7 +176,7 @@ const char* blockColor[] = {
   FG_RED, FG_GREEN, FG_YELLOW, FG_BLUE, FG_MAGENTA, FG_CYAN, FG_WHITE
 };
 
-void spawn_block() {
+int spawn_block() {
   int blockType = get_next_block();
   int (*blockData)[4] = block[blockType][rotation];
 
@@ -196,7 +196,10 @@ void spawn_block() {
 
   x = startX;
   y = 0;
-  draw_block();
+  int code = draw_block();
+  if (code == -1)
+    return -1;
+  return 0;
 }
 
 int control_block() {
@@ -283,14 +286,22 @@ void fix_block() {
   }
 }
 
-void draw_block() {
+int draw_block() {
+  int ret = 0;
+
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
       if (block[blocks[blockIdx]][rotation][j][i]) {
         fill_block(x + i + 1, y + j, BLOCK_FILLED, blockColor[blocks[blockIdx]]);
+
+        if (board[y + j + 1][x + i] != 0) {
+          ret = -1;
+        }
       }
     }
   }
+
+  return ret;
 }
 
 void draw_next_block() {
@@ -305,7 +316,6 @@ void draw_next_block() {
   int nextBlockIdx = (blockIdx + 1) % 7;
   int nextBlock = blocks[nextBlockIdx];
 
-  printf("%d\n", nextBlockIdx);
   if (nextBlockIdx == 1) {
     nextBlock = nextBlocks[1];
   }

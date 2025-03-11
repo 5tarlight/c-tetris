@@ -34,7 +34,7 @@ void fill_block(int x, int y, const char* block, const char* color);
 int* generate_7bag();
 int get_next_block();
 
-void spawn_block();
+int spawn_block();
 void move_block(int dx, int dy);
 void rotate_block_left();
 void rotate_block_right();
@@ -42,9 +42,10 @@ void drop_block();
 int can_move_block(int dx, int dy);
 int can_rotate_left();
 int can_rotate_right();
+int can_spawn_block();
 void fix_block();
 void clear_lines();
-void draw_block();
+int draw_block();
 void draw_next_block();
 void erase_block();
 
