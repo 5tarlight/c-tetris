@@ -185,7 +185,7 @@ void spawn_block() {
   draw_block();
 }
 
-void control_block() {
+int control_block() {
   while (can_move_block(0, 1)) {
     int spaced = 0;
     for (int i = 0; i < 100 && !spaced; i++) {
@@ -210,6 +210,8 @@ void control_block() {
           drop_block();
           spaced = 1;
           break;
+        case 'q':
+          return -1;
       }
 
       if (!spaced)
@@ -225,6 +227,7 @@ void control_block() {
 
   fix_block();
   SLEEP(500);
+  return 1;
 }
 
 int can_move_block(int dx, int dy) {
@@ -234,11 +237,11 @@ int can_move_block(int dx, int dy) {
         int nx = x + i + dx;
         int ny = y + j + dy;
 
-        if (ny < 0 || ny >= BOARD_HEIGHT || nx <= 0 || nx > BOARD_WIDTH) {
+        if (ny < 0 || ny >= BOARD_HEIGHT || nx < 0 || nx >= BOARD_WIDTH) {
           return 0;
         }
 
-        if (ny >= 0 && board[ny][nx]) {
+        if (board[ny][nx]) {
           return 0;
         }
       }
@@ -260,7 +263,8 @@ void fix_block() {
   for (int j = 0; j < 4; j++) {
     for (int i = 0; i < 4; i++) {
       if (block[blocks[blockIdx]][rotation][j][i]) {
-        board[y + j][x + i - 1] = blocks[blockIdx];
+        printf("%d %d\n", y + j, x + i);
+        board[y + j][x + i] = blocks[blockIdx] + 1;
       }
     }
   }
@@ -270,7 +274,7 @@ void draw_block() {
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
       if (block[blocks[blockIdx]][rotation][j][i]) {
-        fill_block(x + i, y + j, BLOCK_FILLED, blockColor[blocks[blockIdx]]);
+        fill_block(x + i + 1, y + j, BLOCK_FILLED, blockColor[blocks[blockIdx]]);
       }
     }
   }
@@ -282,7 +286,7 @@ void erase_block() {
   for (int i = 0; i < 4; i++) {
     for (int j = 0; j < 4; j++) {
       if (block[blocks[blockIdx]][rotation][j][i]) {
-        fill_block(x + i, y + j, BLOCK_EMPTY, RESET);
+        fill_block(x + i + 1, y + j, BLOCK_EMPTY, RESET);
       }
     }
   }
@@ -356,10 +360,11 @@ void clear_lines() {
   }
 
   if (changed) {
+    printf("\a");
     for (int i = 0; i < BOARD_HEIGHT; i++) {
       for (int j = 0; j < BOARD_WIDTH; j++) {
         if (board[i][j]) {
-          fill_block(j + 1, i, BLOCK_FILLED, blockColor[board[i][j]]);
+          fill_block(j + 1, i, BLOCK_FILLED, blockColor[board[i][j] - 1]);
         } else {
           fill_block(j + 1, i, BLOCK_EMPTY, RESET);
         }
@@ -369,6 +374,7 @@ void clear_lines() {
 }
 
 void print_board() {
+  move_cursor(0, 20);
   for (int i = 0; i < BOARD_HEIGHT; i++) {
     for (int j = 0; j < BOARD_WIDTH; j++) {
       printf("%d", board[i][j]);

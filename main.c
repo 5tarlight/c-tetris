@@ -17,13 +17,14 @@ int main() {
   while (1) {
     spawn_block();
     draw_next_block();
-    control_block(); // This causes lock!
+    int code = control_block(); // This causes lock!
     clear_lines();
-//    break;
+
+    if (code == -1) break;
   }
 
-  end_game();
-//  print_board();
+  print_board();
+//  end_game();
 
   return 0;
 }

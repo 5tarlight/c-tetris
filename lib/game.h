@@ -48,7 +48,7 @@ void draw_block();
 void draw_next_block();
 void erase_block();
 
-void control_block();
+int control_block();
 
 void print_board();
 
