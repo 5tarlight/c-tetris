@@ -9,8 +9,16 @@ void init_game() {
   draw_board();
 }
 
+int score = 0;
+
 void end_game() {
-  move_cursor(0, BOARD_HEIGHT + 1);
+  clear_console();
+
+  move_cursor(5, 2);
+  printf("Game Over!");
+  move_cursor(5, 3);
+  printf("Score: %d\n", score);
+
   show_cursor();
 }
 
@@ -406,6 +414,7 @@ void clear_lines() {
 
       changed = 1;
       i++;
+      score += 100;
     }
   }
 
