@@ -306,8 +306,8 @@ void draw_next_block() {
   int nextBlock = blocks[nextBlockIdx];
 
   printf("%d\n", nextBlockIdx);
-  if (nextBlockIdx == 0) {
-    nextBlock = nextBlocks[0];
+  if (nextBlockIdx == 1) {
+    nextBlock = nextBlocks[1];
   }
 
   int (*blockData)[4] = block[nextBlock][0];
