@@ -23,7 +23,7 @@ int main() {
     if (code == -1) break;
   }
 
-  print_board();
+//  print_board();
 //  end_game();
 
   return 0;

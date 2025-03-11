@@ -132,22 +132,36 @@ void _shuffle(int* arr, int size) {
 // 7-bag
 // https://tetris.fandom.com/wiki/Random_Generator
 int* generate_7bag() {
-  // static 변수는 매번 초기화되지 않고 프로그램이 종료될 때까지 유지된다.
-  // 새로 만드는 비용을 줄일 수 있다.
-  static int blocks[7] = { 0, 1, 2, 3, 4, 5, 6 };
+  int* blocks = malloc(sizeof(int) * 7);
+  for (int i = 0; i < 7; i++)
+    blocks[i] = i;
   _shuffle(blocks, 7);
   return blocks;
 }
 
 int blockIdx = 0;
 int* blocks = NULL;
+int* nextBlocks = NULL;
 int rotation = 0;
 int x = 0, y = 0;
+
+int* get_next_blocks() {
+  if (blocks != NULL)
+    free(blocks);
+
+  if (nextBlocks == NULL)
+    nextBlocks = generate_7bag();
+
+  blocks = nextBlocks;
+  nextBlocks = generate_7bag();
+
+  return blocks;
+}
 
 int get_next_block() {
   // 한바퀴 다 돌았거나 처음 시작할 때 새로 섞는다.
   if (blockIdx == 0) {
-    blocks = generate_7bag();
+    blocks = get_next_blocks();
   }
 
   int nextBlock = blocks[blockIdx];
@@ -263,7 +277,6 @@ void fix_block() {
   for (int j = 0; j < 4; j++) {
     for (int i = 0; i < 4; i++) {
       if (block[blocks[blockIdx]][rotation][j][i]) {
-        printf("%d %d\n", y + j, x + i);
         board[y + j][x + i] = blocks[blockIdx] + 1;
       }
     }
@@ -280,7 +293,34 @@ void draw_block() {
   }
 }
 
-void draw_next_block() {}
+void draw_next_block() {
+  // Erase first!
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      move_cursor(2 + i, 6 + j);
+      printf(" ");
+    }
+  }
+
+  int nextBlockIdx = (blockIdx + 1) % 7;
+  int nextBlock = blocks[nextBlockIdx];
+
+  printf("%d\n", nextBlockIdx);
+  if (nextBlockIdx == 0) {
+    nextBlock = nextBlocks[0];
+  }
+
+  int (*blockData)[4] = block[nextBlock][0];
+
+  for (int i = 0; i < 4; i++) {
+    for (int j = 0; j < 4; j++) {
+      if (blockData[j][i]) {
+        move_cursor(2 + i, 6 + j);
+        printf("%s%s%s", blockColor[nextBlock], BLOCK_FILLED, RESET);
+      }
+    }
+  }
+}
 
 void erase_block() {
   for (int i = 0; i < 4; i++) {
