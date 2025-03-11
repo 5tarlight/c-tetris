@@ -19,9 +19,11 @@ int main() {
     draw_next_block();
     control_block(); // This causes lock!
     clear_lines();
+//    break;
   }
 
   end_game();
+//  print_board();
 
   return 0;
 }

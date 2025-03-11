@@ -50,4 +50,6 @@ void erase_block();
 
 void control_block();
 
+void print_board();
+
 #endif // TETRIS_GAME_H

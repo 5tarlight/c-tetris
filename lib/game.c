@@ -260,7 +260,7 @@ void fix_block() {
   for (int j = 0; j < 4; j++) {
     for (int i = 0; i < 4; i++) {
       if (block[blocks[blockIdx]][rotation][j][i]) {
-        board[y + j][x + i] = blocks[blockIdx];
+        board[y + j][x + i - 1] = blocks[blockIdx];
       }
     }
   }
@@ -365,5 +365,14 @@ void clear_lines() {
         }
       }
     }
+  }
+}
+
+void print_board() {
+  for (int i = 0; i < BOARD_HEIGHT; i++) {
+    for (int j = 0; j < BOARD_WIDTH; j++) {
+      printf("%d", board[i][j]);
+    }
+    printf("\n");
   }
 }
