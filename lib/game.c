@@ -33,6 +33,9 @@ void draw_title() {
   printf("%s", RESET);  
 }
 
+/**
+ * `n`번 반복하는 매크로 함수.
+ */
 #define LOOP(n) for (int i = 0; i < (n); i++)
 
 void draw_board() {
@@ -139,6 +142,9 @@ void _shuffle(int* arr, int size) {
 
 // 7-bag
 // https://tetris.fandom.com/wiki/Random_Generator
+// 7개의 블록을 미리 섞어놓고 순서대로 꺼내서 사용한다.
+// 7개를 다 사용하면 다시 섞는다.
+// 랜덤하게 나오지만, 모든 블록이 골고루 나온다.
 int* generate_7bag() {
   int* blocks = malloc(sizeof(int) * 7);
   for (int i = 0; i < 7; i++)
@@ -147,16 +153,18 @@ int* generate_7bag() {
   return blocks;
 }
 
-int blockIdx = 0;
-int* blocks = NULL;
-int* nextBlocks = NULL;
+int blockIdx = 0; // 현재 블록의 인덱스
+int* blocks = NULL; // 7-bag
+int* nextBlocks = NULL; // 다음 7-bag
 int rotation = 0;
 int x = 0, y = 0;
 
 int* get_next_blocks() {
+  // 이전 7-bag을 해제한다.
   if (blocks != NULL)
     free(blocks);
 
+  // 다음 7-bag을 현재 7-bag으로 옮긴다.
   if (nextBlocks == NULL)
     nextBlocks = generate_7bag();
 
@@ -205,7 +213,8 @@ int spawn_block() {
   x = startX;
   y = 0;
   int code = draw_block();
-  if (code == -1)
+
+  if (code == -1) // 게임 오버
     return -1;
   return 0;
 }
