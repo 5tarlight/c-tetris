@@ -46,8 +46,10 @@ typedef struct {
   int y;
 } Pair;
 
+#ifdef _WIN32
 int min(int, int);
 int max(int, int);
+#endif
 
 void clear_console();
 int read_key();
@@ -81,6 +83,7 @@ void draw_next_block();
 void erase_block();
 int control_block();
 
+#ifdef _WIN32
 int min(int a, int b) {
   return a < b ? a : b;
 }
@@ -88,6 +91,7 @@ int min(int a, int b) {
 int max(int a, int b) {
   return a > b ? a : b;
 }
+#endif
 
 void clear_console() {
 #ifdef _WIN32
