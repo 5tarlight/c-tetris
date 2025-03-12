@@ -157,14 +157,6 @@ void move_cursor(int x, int y) {
 #endif
 }
 
-void set_console_color(const char* color) {
-  printf("%s", color);
-}
-
-void reset_console_color() {
-  printf(RESET);
-}
-
 void init_console() {
 #ifdef _WIN32
   HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);

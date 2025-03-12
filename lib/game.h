@@ -13,16 +13,11 @@
 
 #define BLOCK_FILLED "■"
 #define BLOCK_EMPTY "□"
-#define BLOCK_FALLING "▣"
 
 #define BORDER_HORIZONTAL "─"
 #define BORDER_VERTICAL "│"
-#define BORDER_TOP_LEFT "┌"
-#define BORDER_TOP_RIGHT "┐"
 #define BORDER_BOTTOM_LEFT "└"
 #define BORDER_BOTTOM_RIGHT "┘"
-
-#define BLOCK_COUNT 7
 
 void init_game();
 void end_game();
