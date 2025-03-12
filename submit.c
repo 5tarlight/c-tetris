@@ -46,7 +46,7 @@ typedef struct {
   int y;
 } Pair;
 
-#ifdef _WIN32
+#ifndef _WIN32
 int min(int, int);
 int max(int, int);
 #endif
@@ -83,7 +83,7 @@ void draw_next_block();
 void erase_block();
 int control_block();
 
-#ifdef _WIN32
+#ifndef _WIN32
 int min(int a, int b) {
   return a < b ? a : b;
 }
