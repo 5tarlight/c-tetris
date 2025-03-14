@@ -1,6 +1,6 @@
-# Console Tetris in C
+# Tetris for the Console
 
-This is a simple Tetris game implemented in C for the console. The game features basic Tetris mechanics, including block rotation, movement, and line clearing. It runs directly in the terminal without requiring any additional graphical libraries.
+This is a simple **cross-platform** Tetris game implemented in C for the console. The game features basic Tetris mechanics, including block rotation, movement, and line clearing. It runs directly in the terminal without requiring any additional graphical libraries.
 
 ## Controls
 
